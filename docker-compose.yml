@@ -1,0 +1,27 @@
+version: '3.3'
+
+services:
+  db:
+    build:
+      context: ./docker/mysql
+    container_name: db
+    environment:
+      MYSQL_DATABASE: crud_app
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Glob@nt2020
+      MYSQL_ROOT_PASSWORD: Glob@nt2020
+    ports:
+      - "3306:3306"
+
+  web:
+    build:
+      context: ./docker/php
+    container_name: server
+    ports:
+      - "80:80"
+    volumes:
+      - ./www:/var/www/html
+    links:
+      - db
+    stdin_open: true
+    tty: true
